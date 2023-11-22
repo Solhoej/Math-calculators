@@ -1,6 +1,6 @@
 let xValue, aValue, bValue, rValue;
 let y1, y2;
-let cirkelForskrift = '(2-1)^2+(y-2)^2=4^2';
+let cirkelForskrift = '(2-3)^2+(y-2)^2=4^2';
 let inputChanged = false;
 
 function setup() {
@@ -32,6 +32,7 @@ function calculateY() {
   cirkelForskrift = stringInp.value();
 
   let currentNumber = "";
+  let numCount = 1; // Initialize numCount outside the loop
 
   for (let i = 0; i < cirkelForskrift.length; i++) {
     let currentChar = cirkelForskrift.charAt(i);
@@ -40,45 +41,45 @@ function calculateY() {
       currentNumber += currentChar;
     } else {
       if (currentNumber !== "") {
-        numCount = 1;
         switch (numCount) {
           case 1:
             xValue = parseInt(currentNumber);
-            console.log(xValue);
+            console.log("x " + xValue);
             numCount++;
             break;
           case 2:
             aValue = parseInt(currentNumber);
-            console.log(aValue);
+            console.log("a " + aValue);
             numCount++;
             break;
           case 3:
             bValue = parseInt(currentNumber);
-            console.log(bValue);
+            console.log("b " + bValue);
             numCount++;
             break;
           case 4:
             rValue = parseInt(currentNumber);
+            console.log("r " + rValue);
             numCount++;
-            console.log(rValue);
             break;
-            default:
-              numCount = 1;
-              break;
+          default:
+            numCount = 1;
+            break;
         }
         currentNumber = "";
       }
     }
   }
 
-  let discriminant = (sq(2 * bValue)) - (4 * (sq(bValue) + sq(xValue) + sq(aValue) - 2 * aValue * xValue + sq(rValue)));
+  let discriminant = sq(2 * bValue) - 4 * (sq(xValue - aValue) + sq(bValue) - sq(rValue));
+  console.log("Discriminant: " + discriminant);
 
   if (discriminant >= 0) {
-    y1 = (-(2 * bValue) + sqrt(discriminant)) / 2;
-    y2 = (-(2 * bValue) - sqrt(discriminant)) / 2;
-    console.log("y1:" + y1);
-    console.log("y2:" + y2);
+    y1 = bValue + sqrt(discriminant) / 2;
+    y2 = bValue - sqrt(discriminant) / 2;
+    console.log("y1: " + y1);
+    console.log("y2: " + y2);
   } else {
-    console.log("No real solutions for y");
+    console.log("Y har ingen løsninger");
   }
 }
